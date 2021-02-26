@@ -1,0 +1,49 @@
+minebridge
+
+IPMI for Minecraft over Telegram.
+
+REQUIREMENTS
+
+json-c 0.15 (libjson-c.so.5)
+curl 7.75 (libcurl.so.4)
+POSIX compliant system
+gnu99 C compiler
+
+INSTALLATION
+
+autoreconf --install
+./configure
+make
+make install
+
+CONFIGURATION
+
+TG_ADMIN=114514 # UID allowed to execute rcon commands other than /list. Equivalent to OP4.
+TG_CHAT=-114514 # Chat that is allowed to send message to and from.
+TG_LINK_FMT=https://t.me/c/xxx/%d # Format of Telegram links. %d: Message ID.
+TG_API=114514:1919810 # Telegram bot API Key.
+RCON_HOST=localhost # rcon host.
+RCON_PORT=25575 # rcon port.
+RCON_PASSWD=p@ssw0rd! # rcon password.
+
+stdin: read from Minecraft server stdout. Use either pipe or log. For example:
+
+tail -f --lines=0 /path/to/logs/latest.log | minebridge
+
+LIMITATIONS
+
+Cannot start the server if it is not running.
+
+ACKNOWLEDGEMENTS
+
+mcrcon: https://github.com/Tiiffi/mcrcon/tree/b02201d689b3032bc681b28f175fd3d83d167293
+json-c
+libcurl
+
+BUG REPORT
+
+yuuta@yuuta.moe
+
+LICENSE
+
+GPL v2 only.
