@@ -18,7 +18,7 @@ make install
 
 CONFIGURATION
 
-TG_ADMIN=114514 # UID allowed to execute rcon commands other than /list. Equivalent to OP4.
+TG_ADMIN=114514 # UID allowed to execute more rcon commands other than /list. A complete list of commands supported is listed below.
 TG_CHAT=-114514 # Chat that is allowed to send message to and from.
 TG_LINK_FMT=https://t.me/c/xxx/%d # Format of Telegram links. %d: Message ID.
 TG_API=114514:1919810 # Telegram bot API Key.
@@ -33,6 +33,17 @@ tail -f --lines=0 /path/to/logs/latest.log | minebridge
 LIMITATIONS
 
 Cannot start the server if it is not running.
+
+COMMANDS
+
+Any users in the chat can use `/list` or `/list uuids` to check online players.
+
+In additional to these two commands, the administrator can use the following commands as well:
+
+`/debug `
+`/data `
+`/whitelist `
+`/reload`
 
 ACKNOWLEDGEMENTS
 

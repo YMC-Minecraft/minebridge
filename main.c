@@ -114,8 +114,18 @@ run:
 				if(entity.offset == 0 &&
 						!strcmp(entity.type, "bot_command"))
 				{
-					if(tgmsg->from->id == env->tg_admin ||
-							!strcmp(tgmsg->text, "/list"))
+					char is_admin = tgmsg->from->id == env->tg_admin;
+					if((is_admin && (
+									!strncmp(tgmsg->text, "/whitelist ", strlen("/whitelist ")) ||
+									!strncmp(tgmsg->text, "/debug ", strlen("/debug ")) ||
+									!strncmp(tgmsg->text, "/data ", strlen("/data ")) ||
+									!strcmp(tgmsg->text, "/reload")
+							)) ||
+							(
+									!strcmp(tgmsg->text, "/list") ||
+									!strcmp(tgmsg->text, "/list uuids")
+							)
+					  )
 					{
 						is_command = 1;
 						strcpy(msg, tgmsg->text + 1);
