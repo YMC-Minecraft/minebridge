@@ -73,7 +73,7 @@ TGUser *_tg_user_parse(json_object *json)
 
 	json_object *obj;
 	if(json_object_object_get_ex(json, "id", &obj))
-		user->id = json_object_get_int(obj);
+		user->id = json_object_get_int64(obj);
 	if(json_object_object_get_ex(json, "first_name", &obj))
 		user->first_name = json_object_get_string(obj);
 	if(json_object_object_get_ex(json, "last_name", &obj))

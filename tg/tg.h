@@ -23,7 +23,7 @@ typedef struct tg_resp {
 } TGResp;
 
 typedef struct tg_user {
-	int32_t id;
+	int64_t id;
 	const char *first_name; // Ownership: json
 	const char *last_name; // Ownership: json
 	const char *username; // Ownership: json
