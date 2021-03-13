@@ -157,9 +157,9 @@ run:
 		else if(tgmsg->photo_length > 0)
 		{
 			if(tgmsg->caption == NULL)
-				sprintf(msg, "(%d photo%s)", tgmsg->photo_length, tgmsg->photo_length > 1 ? "s" : "");
+				sprintf(msg, "(Photo)");
 			else
-				sprintf(msg, "%s (%d photo%s)", tgmsg->caption, tgmsg->photo_length, tgmsg->photo_length > 1 ? "s" : "");
+				sprintf(msg, "%s (Photo)", tgmsg->caption);
 		}
 
 		char *cmd = NULL;
