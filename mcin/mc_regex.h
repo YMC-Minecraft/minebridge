@@ -52,4 +52,6 @@
 ".* didn't want to live in the same world as.*," \
 ".* withered away.*," \
 "<.*> .*"
+#define MC_REGEX_WARN \
+"Can't keep up! Is the server overloaded\\? Running .*ms or .* ticks behind"
 #endif // _MC_REGEX_H
