@@ -123,7 +123,8 @@ run:
 							)) ||
 							(
 									!strcmp(tgmsg->text, "/list") ||
-									!strcmp(tgmsg->text, "/list uuids")
+									!strncmp(tgmsg->text, "/player ", strlen("/player ")) ||
+									!strcmp(tgmsg->text, "/tick health")
 							)
 					  )
 					{
