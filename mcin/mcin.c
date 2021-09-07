@@ -124,7 +124,7 @@ char *mcin_matcher_match(MCINMatcher *matcher, const char *str)
 	}
 	for(int i = 0; i < count; i ++)
 	{
-		if(!regexec(&arr[i], str, 0, NULL, 0))
+		if(!regexec(&arr[i], temp_str, 0, NULL, 0))
 		{
 			return temp_str;
 		}
