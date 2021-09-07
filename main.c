@@ -69,6 +69,7 @@ void *main_tg2mc(void *e)
 	char msg[4097];
 	char name[1024];
 	char username[512];
+	char url[512];
 	char uid[32];
 	int32_t max_upd_id = 0;
 run:
@@ -191,6 +192,22 @@ run:
 			json_object *obj2 = json_object_new_object();
 			json_object_array_add(req_root, obj2);
 			json_object_object_add(obj2, "text", json_object_new_string(msg));
+			json_object *obj3 = json_object_new_object();
+			json_object_array_add(req_root, obj3);
+			json_object_object_add(obj3, "text", json_object_new_string("[t.me]"));
+			json_object_object_add(obj3, "underlined", json_object_new_boolean(1));
+			json_object_object_add(obj3, "color", json_object_new_string("dark_aqua"));
+			json_object *obj3_click_event = json_object_new_object();
+			json_object_object_add(obj3, "clickEvent", obj3_click_event);
+			json_object_object_add(obj3_click_event, "action", json_object_new_string("open_url"));
+			sprintf(url, env->tg_link_fmt, tgmsg->message_id);
+			json_object_object_add(obj3_click_event, "value", json_object_new_string(url));
+			json_object *obj3_hover_event = json_object_new_object();
+			json_object_object_add(obj3, "hoverEvent", obj3_hover_event);
+			json_object_object_add(obj3_hover_event, "action", json_object_new_string("show_text"));
+			json_object *obj3_hv_contents = json_object_new_object();
+			json_object_object_add(obj3_hover_event, "contents", obj3_hv_contents);
+			json_object_object_add(obj3_hv_contents, "text", json_object_new_string("View in Telegram"));
 			const char *json = json_object_to_json_string(req_root);
 			cmd = calloc(strlen(json) + 11 /* "tellraw @a " */ + 1, sizeof(char));
 			sprintf(cmd, "tellraw @a %s", json);
