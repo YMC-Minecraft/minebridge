@@ -2,7 +2,7 @@
 #define _MC_REGEX_H
 #define MC_REGEX \
 "^.* joined the game," \
-"^.* lost connection: .*," \
+"^\\w* lost connection: .*," \
 "^Stopping server," \
 "^Starting minecraft server version .*," \
 "^Done \\(.*s\\)! For help type \"help\"," \
