@@ -185,7 +185,7 @@ run:
 			else sprintf(username, "@%s\n", tgmsg->from->username);
 			json_object_object_add(contents_1_text_1, "text", json_object_new_string(username));
 			json_object *contents_1_text_2 = json_object_new_object();
-			sprintf(uid, "UID: %d", tgmsg->from->id);
+			sprintf(uid, "UID: %ld", tgmsg->from->id);
 			json_object_object_add(contents_1_text_2, "text", json_object_new_string(uid));
 			json_object_array_add(contents_1, contents_1_text_1);
 			json_object_array_add(contents_1, contents_1_text_2);
