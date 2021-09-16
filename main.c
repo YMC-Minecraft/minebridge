@@ -114,7 +114,15 @@ run:
 				if(entity.offset == 0 &&
 						!strcmp(entity.type, "bot_command"))
 				{
-					char is_admin = tgmsg->from->id == env->tg_admin;
+					char is_admin = 0;
+					for(int i = 0; i < env->tg_admins_size; i ++)
+					{
+						if(tgmsg->from->id == env->tg_admins[i])
+						{
+							is_admin = 1;
+							break;
+						}
+					}
 					if((is_admin && (
 									!strncmp(tgmsg->text, "/whitelist ", strlen("/whitelist ")) ||
 									!strncmp(tgmsg->text, "/debug ", strlen("/debug ")) ||
@@ -359,6 +367,7 @@ read:
 
 	goto cleanup;
 cleanup:
+	environ_free(&environ);
 	if(curl != NULL) curl_easy_cleanup(curl);
 	curl_global_cleanup();
 	if(sd != 0) net_close(sd);

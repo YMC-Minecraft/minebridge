@@ -10,6 +10,8 @@
 
 int environ_read(Environ *out)
 {
+	int r = 0;
+
 	out->tg_api = getenv("TG_API");
 	out->tg_chat_raw = getenv("TG_CHAT");
 	char *tg_admin_raw = getenv("TG_ADMIN");
@@ -25,32 +27,79 @@ int environ_read(Environ *out)
 			out->rcon_port == NULL)
 	{
 		fprintf(stderr, _("Required environment variables are missing.\n"));
-		return EX_USAGE;
+		r = EX_USAGE;
+		goto cleanup;
 	}
 	char *endptr;
 	intmax_t num = strtoimax(out->tg_chat_raw, &endptr, 10);
 	if(strcmp(endptr, "") || (num == INTMAX_MAX && errno == ERANGE))
 	{
 		fprintf(stderr, _("TG_CHAT is invalid\n"));
-		return EX_USAGE;
+		r = EX_USAGE;
+		goto cleanup;
 	}
 	if(num > INT64_MAX || num < INT64_MIN)
 	{
 		fprintf(stderr, _("TG_CHAT is invalid\n"));
-		return EX_USAGE;
+		r = EX_USAGE;
+		goto cleanup;
 	}
 	out->tg_chat = (int64_t)num;
-	uintmax_t unum = strtoumax(tg_admin_raw, &endptr, 10);
-	if(strcmp(endptr, "") || (unum == UINTMAX_MAX && errno == ERANGE))
+	char *token = strtok(tg_admin_raw, ",");
+	out->tg_admins_size = 0;
+	out->tg_admins = NULL;
+	while(token != NULL)
 	{
-		fprintf(stderr, _("TG_ADMIN is invalid\n"));
-		return EX_USAGE;
+		out->tg_admins_size ++;
+		if(out->tg_admins == NULL)
+		{
+			out->tg_admins = calloc(out->tg_admins_size, sizeof(uint32_t));
+			if(out->tg_admins == NULL)
+			{
+				r = errno;
+				fprintf(stderr, _("Cannot allocate memory: %s.\n"), strerror(r));
+				goto cleanup;
+			}
+		}
+		else
+		{
+			if((out->tg_admins = realloc(out->tg_admins, out->tg_admins_size * sizeof(uint32_t))) == NULL)
+			{
+				r = errno;
+				fprintf(stderr, _("Cannot allocate memory: %s.\n"), strerror(r));
+				free(out->tg_admins);
+				goto cleanup;
+			}
+		}
+		uintmax_t unum = strtoumax(token, &endptr, 10);
+		if(strcmp(endptr, "") || (unum == UINTMAX_MAX && errno == ERANGE))
+		{
+			fprintf(stderr, _("TG_ADMIN is invalid\n"));
+			r = EX_USAGE;
+			goto cleanup;
+		}
+		if(unum > UINT32_MAX || unum < 0)
+		{
+			fprintf(stderr, _("TG_ADMIN is invalid\n"));
+			r = EX_USAGE;
+			goto cleanup;
+		}
+		out->tg_admins[out->tg_admins_size - 1] = (uint32_t)unum;
+		token = strtok(NULL, ",");
 	}
-	if(unum > UINT32_MAX || unum < 0)
+cleanup:
+	if(r)
 	{
-		fprintf(stderr, _("TG_ADMIN is invalid\n"));
-		return EX_USAGE;
+		environ_free(out);
 	}
-	out->tg_admin = (uint32_t)unum;
 	return 0;
+}
+
+void environ_free(Environ *env)
+{
+	if(env->tg_admins != NULL)
+	{
+		free(env->tg_admins);
+		env->tg_admins = NULL;
+	}
 }
