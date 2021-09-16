@@ -119,6 +119,7 @@ run:
 									!strncmp(tgmsg->text, "/whitelist ", strlen("/whitelist ")) ||
 									!strncmp(tgmsg->text, "/debug ", strlen("/debug ")) ||
 									!strncmp(tgmsg->text, "/data ", strlen("/data ")) ||
+									!strncmp(tgmsg->text, "/kick ", strlen("/kick ")) ||
 									!strcmp(tgmsg->text, "/reload")
 							)) ||
 							(
