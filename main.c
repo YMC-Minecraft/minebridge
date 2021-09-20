@@ -128,6 +128,7 @@ run:
 									!strncmp(tgmsg->text, "/debug ", strlen("/debug ")) ||
 									!strncmp(tgmsg->text, "/data ", strlen("/data ")) ||
 									!strncmp(tgmsg->text, "/kick ", strlen("/kick ")) ||
+									!strncmp(tgmsg->text, "/scoreboard ", strlen("/scoreboard ")) ||
 									!strcmp(tgmsg->text, "/reload")
 							)) ||
 							(
