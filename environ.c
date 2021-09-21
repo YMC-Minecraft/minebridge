@@ -92,7 +92,7 @@ cleanup:
 	{
 		environ_free(out);
 	}
-	return 0;
+	return r;
 }
 
 void environ_free(Environ *env)
