@@ -13,7 +13,7 @@
 #include <string.h>
 #include <unistd.h>
 
-void *main_mc2tg(void *e)
+static void *main_mc2tg(void *e)
 {
 	const Environ *env = (Environ*)e;
 	int r = 0;
@@ -55,7 +55,7 @@ cleanup:
 	return NULL;
 }
 
-void *main_tg2mc(void *e)
+static void *main_tg2mc(void *e)
 {
 	const Environ *env = (Environ*)e;
 	CURL *curl = curl_easy_init();
@@ -245,7 +245,7 @@ run:
 	goto run;
 }
 
-int start_threads(Environ *env)
+static int start_threads(Environ *env)
 {
 
 	int r = 0;
@@ -271,7 +271,7 @@ cleanup:
 	return r;
 }
 
-int truncate_updates(Environ *env, CURL *curl)
+static int truncate_updates(Environ *env, CURL *curl)
 {
 	int r = 0;
 	TGResp *resp;

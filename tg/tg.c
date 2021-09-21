@@ -9,7 +9,7 @@
 #include <json-c/json_tokener.h>
 #include <curl/curl.h>
 
-void _tg_entity_parse(TGEntity *entity, json_object *json)
+static void _tg_entity_parse(TGEntity *entity, json_object *json)
 {
 	entity->type = NULL;
 	entity->offset = 0;
@@ -24,11 +24,11 @@ void _tg_entity_parse(TGEntity *entity, json_object *json)
 		entity->length = json_object_get_int(obj);
 }
 
-void _tg_photo_parse(TGPhoto *photo, json_object *json)
+static void _tg_photo_parse(TGPhoto *photo, json_object *json)
 {
 }
 
-TGSticker *_tg_sticker_parse(json_object *json)
+static TGSticker *_tg_sticker_parse(json_object *json)
 {
 	TGSticker *sticker = malloc(sizeof(TGSticker));
 	sticker->emoji = NULL;
@@ -40,7 +40,7 @@ TGSticker *_tg_sticker_parse(json_object *json)
 	return sticker;
 }
 
-TGDocument *_tg_document_parse(json_object *json)
+static TGDocument *_tg_document_parse(json_object *json)
 {
 	TGDocument *document = malloc(sizeof(TGDocument));
 	document->file_name = NULL;
@@ -51,7 +51,7 @@ TGDocument *_tg_document_parse(json_object *json)
 
 	return document;
 }
-TGChat *_tg_chat_parse(json_object *json)
+static TGChat *_tg_chat_parse(json_object *json)
 {
 	TGChat *chat = malloc(sizeof(TGChat));
 	chat->id = 0;
@@ -63,7 +63,7 @@ TGChat *_tg_chat_parse(json_object *json)
 	return chat;
 }
 
-TGUser *_tg_user_parse(json_object *json)
+static TGUser *_tg_user_parse(json_object *json)
 {
 	TGUser *user = malloc(sizeof(TGUser));
 	user->id = 0;
@@ -84,7 +84,7 @@ TGUser *_tg_user_parse(json_object *json)
 	return user;
 }
 
-TGMessage *_tg_message_parse(json_object *json)
+static TGMessage *_tg_message_parse(json_object *json)
 {
 	TGMessage *message = malloc(sizeof(TGMessage));
 	message->message_id = 0;
@@ -142,7 +142,7 @@ TGMessage *_tg_message_parse(json_object *json)
 	return message;
 }
 
-void _tg_update_parse(TGUpdate *update, json_object *json)
+static void _tg_update_parse(TGUpdate *update, json_object *json)
 {
 	update->update_id = 0;
 	update->message = NULL;
@@ -156,7 +156,7 @@ void _tg_update_parse(TGUpdate *update, json_object *json)
 
 #define _TG_BASE_URL "https://api.telegram.org/bot"
 
-int _tg_api_call(
+static int _tg_api_call(
 		CURL *curl,
 		const char *tg_api,
 		const char parse_body,
