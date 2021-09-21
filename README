@@ -11,9 +11,7 @@ gnu99 C compiler
 
 INSTALLATION
 
-autoreconf --install
-./configure
-make
+make release
 make install
 
 CONFIGURATION
