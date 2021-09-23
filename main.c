@@ -129,6 +129,7 @@ run:
 									!strncmp(tgmsg->text, "/data ", strlen("/data ")) ||
 									!strncmp(tgmsg->text, "/kick ", strlen("/kick ")) ||
 									!strncmp(tgmsg->text, "/scoreboard ", strlen("/scoreboard ")) ||
+									!strncmp(tgmsg->text, "/save-all", strlen("/save-all")) ||
 									!strcmp(tgmsg->text, "/reload")
 							)) ||
 							(
